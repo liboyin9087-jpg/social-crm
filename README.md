@@ -26,10 +26,16 @@ OakMega Social CRM 是專為社交平台打造的客戶關係管理系統，特�
 ### 樣式設計
 - **Tailwind CSS 3.4.1**: 實用優先的 CSS 框架
 - **Canopy Design System**: OakMega 自有設計系統
-  - 色彩: \`oak.forest\`, \`oak.moss\`, \`oak.gold\`, \`oak.paper\`, \`oak.bark\`
-  - 字體: Noto Sans CJK TC, Inter, Playfair Display
-  - 圓角: \`rounded-soft\` (12px)
-  - 陰影: \`shadow-glass\` 玻璃擬態效果
+  - 品牌色彩:
+    - `oak-soul` (#5D38BF): Purple 700 - 主要品牌色
+    - `oak-warmth` (#FFC044): Orange 400 - 強調色
+    - `oak-canvas` (#F9F9F7): Paper Canvas - 背景色
+    - `oak-text` (#2C2C2C): 主要文字色
+    - `oak-subtext` (#6B7280): 次要文字色
+  - 字體: Noto Sans TC, Ubuntu, Inter, Playfair Display
+  - 圓角: `rounded-soft` (12px), `rounded-card` (16px)
+  - 陰影: `shadow-soul`, `shadow-warmth`, `shadow-glass` 玻璃擬態效果
+  - 動畫: `animate-growth`, `animate-float` 品牌動畫效果
 
 ### 後端服務
 - **Supabase 2.57.4**: 開源的 Firebase 替代方案
@@ -50,14 +56,17 @@ OakMega Social CRM 是專為社交平台打造的客戶關係管理系統，特�
 
 \`\`\`
 social-crm/
+├── public/                   # 靜態資源
+│   └── vite.svg             # Vite Logo
 ├── src/
 │   ├── components/           # React 組件
+│   │   ├── automation/      # 自動化相關組件（LineMessageNode）
 │   │   ├── common/          # 通用組件（EmptyState, Skeleton）
 │   │   ├── games/           # 遊戲組件（轉盤、刮刮樂、老虎機）
 │   │   ├── icons/           # 圖標組件
 │   │   ├── layout/          # 布局組件（Navigation, Sidebar）
 │   │   ├── oma/             # OMA 相關組件
-│   │   ├── ui/              # UI 基礎組件
+│   │   ├── ui/              # UI 基礎組件（BrandButton, Loading, OptimisticChat）
 │   │   └── visualization/   # 數據可視化組件
 │   ├── contexts/            # React Context（Auth, Navigation）
 │   ├── hooks/               # 自定義 Hooks
@@ -84,6 +93,7 @@ social-crm/
 │   └── index.css            # 全局樣式
 ├── supabase/
 │   └── migrations/          # 資料庫遷移文件
+├── .env.example             # 環境變量範例
 ├── index.html               # HTML 入口文件
 ├── package.json             # NPM 依賴配置
 ├── vite.config.ts           # Vite 配置
@@ -115,12 +125,12 @@ npm install
 
 ### 3. 環境配置
 
-在專案根目錄創建 \`.env\` 文件：
+在專案根目錄創建 `.env` 文件（可參考 `.env.example`）：
 
-\`\`\`env
+```env
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-\`\`\`
+```
 
 **獲取 Supabase 憑證：**
 1. 前往 [Supabase Dashboard](https://app.supabase.com/)
@@ -157,7 +167,7 @@ npm run dev
 
 ### 可用指令
 
-\`\`\`bash
+```bash
 # 開發模式（熱重載）
 npm run dev
 
@@ -168,6 +178,20 @@ npm run build
 npm run lint
 
 # 類型檢查
+npm run typecheck
+
+# 運行測試
+npm test
+
+# 運行測試（UI 模式）
+npm run test:ui
+
+# 生成測試覆蓋率報告
+npm run test:coverage
+
+# 預覽生產構建
+npm run preview
+```
 npm run typecheck
 
 # 預覽生產構建
@@ -208,7 +232,184 @@ function YourComponent() {
   push('playground'); // 遊樂場
   push('rewards');    // 優惠券
 }
-\`\`\`
+```
+
+### UI 組件使用
+
+#### BrandButton 品牌按鈕
+
+```javascript
+import { BrandButton } from './components/ui/BrandButton';
+
+function YourComponent() {
+  return (
+    <>
+      <BrandButton variant="primary">主要按鈕</BrandButton>
+      <BrandButton variant="action">行動按鈕</BrandButton>
+      <BrandButton variant="secondary">次要按鈕</BrandButton>
+      <BrandButton variant="ghost">幽靈按鈕</BrandButton>
+    </>
+  );
+}
+```
+
+#### Loading 載入動畫
+
+```javascript
+import { Loading, PageLoading } from './components/ui/Loading';
+
+function YourComponent() {
+  return (
+    <>
+      <Loading size="sm" color="soul" />
+      <Loading size="md" color="warmth" />
+      <PageLoading message="加載中..." />
+    </>
+  );
+}
+```
+
+#### OptimisticChat 即時聊天
+
+```javascript
+import { OptimisticChat } from './components/ui/OptimisticChat';
+
+function YourComponent() {
+  const handleSendMessage = async (message) => {
+    // 發送訊息到伺服器
+    const response = await fetch('/api/messages', {
+      method: 'POST',
+      body: JSON.stringify({ text: message })
+    });
+    return response.json();
+  };
+
+  return (
+    <OptimisticChat
+      initialMessages={[]}
+      onSendMessage={handleSendMessage}
+      userName="使用者名稱"
+    />
+  );
+}
+```
+
+#### Sidebar 側邊欄
+
+```javascript
+import { Sidebar } from './components/layout/Sidebar';
+
+function YourComponent() {
+  const navItems = [
+    { id: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: <DashboardIcon /> },
+    { id: 'inbox', label: 'Inbox', path: '/inbox', icon: <InboxIcon /> },
+    { id: 'oma', label: 'OMA', path: '/oma', icon: <OmaIcon /> },
+    { id: 'modules', label: 'Modules', path: '/modules', icon: <ModulesIcon /> },
+    { id: 'playground', label: 'Playground', path: '/playground', icon: <GameIcon /> },
+    { id: 'rewards', label: 'Rewards', path: '/rewards', icon: <GiftIcon /> },
+  ];
+
+  return (
+    <Sidebar
+      activePath="/dashboard"
+      navItems={navItems}
+      onNavigate={(path) => console.log('Navigate to:', path)}
+    />
+  );
+}
+```
+
+#### LineMessageNode React Flow 節點
+
+```javascript
+import { LineMessageNode } from './components/automation/LineMessageNode';
+
+function YourComponent() {
+  return (
+    <LineMessageNode
+      data={{
+        message: 'Hello! 👋',
+        sender: 'OakMega Bot',
+        timestamp: new Date().toISOString()
+      }}
+      selected={false}
+    />
+  );
+}
+```
+
+#### RealtimeChat 即時聊天 (新增)
+
+```javascript
+import { RealtimeChat } from './components/ui/RealtimeChat';
+
+function YourComponent() {
+  const currentUser = { id: 'user123', display_name: '使用者' };
+  
+  return (
+    <RealtimeChat
+      channelId="channel-1"
+      currentUser={currentUser}
+      onError={(error) => console.error(error)}
+    />
+  );
+}
+```
+
+#### NotificationCenter 通知中心 (新增)
+
+```javascript
+import { NotificationCenter } from './components/ui/NotificationCenter';
+
+function YourComponent() {
+  return (
+    <NotificationCenter
+      userId="user123"
+      onError={(error) => console.error(error)}
+    />
+  );
+}
+```
+
+### 服務層使用 (Services)
+
+#### RealtimeService 即時通訊服務 (新增)
+
+```javascript
+import { subscribeToMessages, sendMessage } from './services/realtimeService';
+
+// 訂閱即時訊息
+const subscription = subscribeToMessages('channel-1', (newMessage) => {
+  console.log('New message:', newMessage);
+});
+
+// 發送訊息
+await sendMessage('channel-1', 'Hello!', 'user123');
+
+// 取消訂閱
+subscription.unsubscribe();
+```
+
+#### PushNotificationService 推播通知服務 (新增)
+
+```javascript
+import { 
+  requestNotificationPermission,
+  showNotification,
+  subscribeToNotifications 
+} from './services/pushNotificationService';
+
+// 請求通知權限
+const permission = await requestNotificationPermission();
+
+// 顯示瀏覽器通知
+showNotification('新訊息', { body: '您有一則新訊息', url: '/inbox' });
+
+// 訂閱即時通知
+const subscription = subscribeToNotifications('user123', (notification) => {
+  console.log('New notification:', notification);
+});
+```
 
 ## 功能說明
 
@@ -239,6 +440,94 @@ function YourComponent() {
 - 支持多種優惠類型（折扣、滿減、免運、贈品）
 - 優惠券分發和追蹤
 - 使用歷史記錄
+
+### 6. 即時通訊 (Real-time Messaging) 🆕
+- **即時聊天**: WebSocket 即時訊息傳送
+- **在線狀態**: 用戶在線狀態追蹤
+- **輸入指示器**: 即時顯示對方正在輸入
+- **訊息歷史**: 自動載入對話歷史
+
+### 7. 推播通知 (Push Notifications) 🆕
+- **瀏覽器通知**: 原生瀏覽器推播通知
+- **應用內通知**: 通知中心即時更新
+- **通知管理**: 標記已讀、刪除、篩選功能
+- **未讀計數**: 即時未讀通知數量顯示
+
+## 測試 (Testing) 🆕
+
+專案使用 **Vitest** 和 **React Testing Library** 進行測試。
+
+### 運行測試
+
+```bash
+# 運行所有測試
+npm test
+
+# 運行測試（監聽模式）
+npm test -- --watch
+
+# 運行測試（UI 模式）
+npm run test:ui
+
+# 生成測試覆蓋率報告
+npm run test:coverage
+```
+
+### 測試結構
+
+```
+src/
+├── components/
+│   ├── ui/
+│   │   ├── BrandButton.jsx
+│   │   ├── BrandButton.test.jsx  ✅ 9 tests
+│   │   ├── Loading.jsx
+│   │   └── Loading.test.jsx      ✅ 11 tests
+│   └── layout/
+│       ├── Sidebar.jsx
+│       └── Sidebar.test.jsx      ✅ 7 tests
+└── tests/
+    └── setup.ts                  # 測試設定檔
+```
+
+**測試覆蓋率**: 27 個測試全部通過 ✅
+
+## CI/CD Pipeline 🆕
+
+專案已配置 GitHub Actions 自動化工作流程。
+
+### 工作流程階段
+
+1. **Lint & Type Check** 🔍
+   - ESLint 代碼品質檢查
+   - TypeScript 類型檢查
+
+2. **Run Tests** ✅
+   - 執行所有單元測試
+   - 生成測試覆蓋率報告
+   - 上傳至 Codecov
+
+3. **Build Application** 🏗️
+   - 構建生產版本
+   - 上傳構建產物
+
+4. **Deploy Preview** 🚀
+   - PR 自動部署預覽環境（Vercel）
+
+5. **Deploy Production** 🌐
+   - main 分支自動部署至生產環境
+
+### 觸發條件
+
+- **Push**: `main`, `develop` 分支
+- **Pull Request**: 針對 `main`, `develop` 分支
+
+### 配置環境變數
+
+在 GitHub Repository Settings > Secrets 中配置：
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
 
 ## 故障排除
 

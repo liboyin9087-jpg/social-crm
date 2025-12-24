@@ -1,7 +1,8 @@
 import React from 'react';
 
 /**
- * Sidebar - A sticky sidebar component with OakMega Canopy brand identity
+ * Sidebar - A sticky sidebar component with OakMega brand identity
+ * Navigation items: Dashboard, Inbox, OMA, Modules, Playground, Rewards
  * 
  * @param {Object} props
  * @param {string} props.activePath - Currently active navigation path
@@ -22,10 +23,13 @@ export const Sidebar = ({
       <div className="px-6 py-8 border-b border-gray-200">
         {logo || (
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-oakmega-purple-700 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-oak-soul to-oak-warmth rounded-soft flex items-center justify-center shadow-soul">
               <span className="text-white font-brand font-bold text-xl">O</span>
             </div>
-            <span className="font-brand font-bold text-xl text-gray-900">OakMega</span>
+            <div className="flex flex-col">
+              <span className="font-brand font-bold text-xl text-oak-text">OakMega</span>
+              <span className="font-sans text-xs text-oak-subtext">Social CRM</span>
+            </div>
           </div>
         )}
       </div>
@@ -41,25 +45,25 @@ export const Sidebar = ({
                 <button
                   onClick={() => onNavigate(item.path || item.id)}
                   className={`
-                    relative w-full flex items-center gap-3 px-4 py-3 rounded-lg
+                    relative w-full flex items-center gap-3 px-4 py-3 rounded-soft
                     transition-all duration-200 ease-in-out
                     ${isActive 
-                      ? 'bg-oakmega-purple-700/5 text-oakmega-purple-700' 
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                      ? 'bg-oak-soul/5 text-oak-soul' 
+                      : 'text-oak-subtext hover:bg-oak-canvas hover:text-oak-text'
                     }
                   `}
                 >
                   {/* Active Indicator - Vertical Orange Bar */}
                   {isActive && (
                     <span 
-                      className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-oakmega-orange-400 rounded-r-full"
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-oak-warmth rounded-r-full animate-growth"
                       aria-hidden="true"
                     />
                   )}
                   
                   {/* Icon */}
                   {item.icon && (
-                    <span className={`flex-shrink-0 ${isActive ? 'text-oakmega-purple-700' : ''}`}>
+                    <span className={`flex-shrink-0 ${isActive ? 'text-oak-soul' : ''}`}>
                       {typeof item.icon === 'function' ? item.icon({ active: isActive }) : item.icon}
                     </span>
                   )}
@@ -75,9 +79,9 @@ export const Sidebar = ({
         </ul>
       </nav>
 
-      {/* Optional Footer Section */}
+      {/* Footer Section */}
       <div className="px-6 py-4 border-t border-gray-200">
-        <p className="text-xs text-gray-500 font-sans">© 2024 OakMega</p>
+        <p className="text-xs text-oak-subtext font-sans">© 2024 OakMega</p>
       </div>
     </aside>
   );
