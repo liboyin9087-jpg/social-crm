@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import './OakMega_ModuleCenter.css';
+import '../styles/oakmega_modulecenter.css';
 
 const OakMegaModuleCenter = () => {
   // 完整的模組資料
