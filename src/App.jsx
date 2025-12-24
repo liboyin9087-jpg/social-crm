@@ -13,8 +13,19 @@ import { ScreenPlayground } from './screens/ScreenPlayground';
 import { ScreenRewards } from './screens/ScreenRewards';
 
 const AppContent = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const { currentScreen, push } = useNavigation();
+
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-[#0f0f1a]">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-[#00E5A0] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-white/50">載入中...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!user) {
     return <ScreenLogin />;
