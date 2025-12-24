@@ -167,7 +167,7 @@ npm run dev
 
 ### 可用指令
 
-\`\`\`bash
+```bash
 # 開發模式（熱重載）
 npm run dev
 
@@ -178,6 +178,20 @@ npm run build
 npm run lint
 
 # 類型檢查
+npm run typecheck
+
+# 運行測試
+npm test
+
+# 運行測試（UI 模式）
+npm run test:ui
+
+# 生成測試覆蓋率報告
+npm run test:coverage
+
+# 預覽生產構建
+npm run preview
+```
 npm run typecheck
 
 # 預覽生產構建
@@ -324,6 +338,79 @@ function YourComponent() {
 }
 ```
 
+#### RealtimeChat 即時聊天 (新增)
+
+```javascript
+import { RealtimeChat } from './components/ui/RealtimeChat';
+
+function YourComponent() {
+  const currentUser = { id: 'user123', display_name: '使用者' };
+  
+  return (
+    <RealtimeChat
+      channelId="channel-1"
+      currentUser={currentUser}
+      onError={(error) => console.error(error)}
+    />
+  );
+}
+```
+
+#### NotificationCenter 通知中心 (新增)
+
+```javascript
+import { NotificationCenter } from './components/ui/NotificationCenter';
+
+function YourComponent() {
+  return (
+    <NotificationCenter
+      userId="user123"
+      onError={(error) => console.error(error)}
+    />
+  );
+}
+```
+
+### 服務層使用 (Services)
+
+#### RealtimeService 即時通訊服務 (新增)
+
+```javascript
+import { subscribeToMessages, sendMessage } from './services/realtimeService';
+
+// 訂閱即時訊息
+const subscription = subscribeToMessages('channel-1', (newMessage) => {
+  console.log('New message:', newMessage);
+});
+
+// 發送訊息
+await sendMessage('channel-1', 'Hello!', 'user123');
+
+// 取消訂閱
+subscription.unsubscribe();
+```
+
+#### PushNotificationService 推播通知服務 (新增)
+
+```javascript
+import { 
+  requestNotificationPermission,
+  showNotification,
+  subscribeToNotifications 
+} from './services/pushNotificationService';
+
+// 請求通知權限
+const permission = await requestNotificationPermission();
+
+// 顯示瀏覽器通知
+showNotification('新訊息', { body: '您有一則新訊息', url: '/inbox' });
+
+// 訂閱即時通知
+const subscription = subscribeToNotifications('user123', (notification) => {
+  console.log('New notification:', notification);
+});
+```
+
 ## 功能說明
 
 ### 1. 儀表板 (Dashboard)
@@ -353,6 +440,94 @@ function YourComponent() {
 - 支持多種優惠類型（折扣、滿減、免運、贈品）
 - 優惠券分發和追蹤
 - 使用歷史記錄
+
+### 6. 即時通訊 (Real-time Messaging) 🆕
+- **即時聊天**: WebSocket 即時訊息傳送
+- **在線狀態**: 用戶在線狀態追蹤
+- **輸入指示器**: 即時顯示對方正在輸入
+- **訊息歷史**: 自動載入對話歷史
+
+### 7. 推播通知 (Push Notifications) 🆕
+- **瀏覽器通知**: 原生瀏覽器推播通知
+- **應用內通知**: 通知中心即時更新
+- **通知管理**: 標記已讀、刪除、篩選功能
+- **未讀計數**: 即時未讀通知數量顯示
+
+## 測試 (Testing) 🆕
+
+專案使用 **Vitest** 和 **React Testing Library** 進行測試。
+
+### 運行測試
+
+```bash
+# 運行所有測試
+npm test
+
+# 運行測試（監聽模式）
+npm test -- --watch
+
+# 運行測試（UI 模式）
+npm run test:ui
+
+# 生成測試覆蓋率報告
+npm run test:coverage
+```
+
+### 測試結構
+
+```
+src/
+├── components/
+│   ├── ui/
+│   │   ├── BrandButton.jsx
+│   │   ├── BrandButton.test.jsx  ✅ 9 tests
+│   │   ├── Loading.jsx
+│   │   └── Loading.test.jsx      ✅ 11 tests
+│   └── layout/
+│       ├── Sidebar.jsx
+│       └── Sidebar.test.jsx      ✅ 7 tests
+└── tests/
+    └── setup.ts                  # 測試設定檔
+```
+
+**測試覆蓋率**: 27 個測試全部通過 ✅
+
+## CI/CD Pipeline 🆕
+
+專案已配置 GitHub Actions 自動化工作流程。
+
+### 工作流程階段
+
+1. **Lint & Type Check** 🔍
+   - ESLint 代碼品質檢查
+   - TypeScript 類型檢查
+
+2. **Run Tests** ✅
+   - 執行所有單元測試
+   - 生成測試覆蓋率報告
+   - 上傳至 Codecov
+
+3. **Build Application** 🏗️
+   - 構建生產版本
+   - 上傳構建產物
+
+4. **Deploy Preview** 🚀
+   - PR 自動部署預覽環境（Vercel）
+
+5. **Deploy Production** 🌐
+   - main 分支自動部署至生產環境
+
+### 觸發條件
+
+- **Push**: `main`, `develop` 分支
+- **Pull Request**: 針對 `main`, `develop` 分支
+
+### 配置環境變數
+
+在 GitHub Repository Settings > Secrets 中配置：
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
 
 ## 故障排除
 
