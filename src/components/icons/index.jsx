@@ -493,3 +493,17 @@ export const IconSparkle = ({ size = 24, className = '' }) => (
     <path d="M5 16L6 18L8 19L6 20L5 22L4 20L2 19L4 18L5 16Z" stroke="currentColor" strokeWidth="1" fill="rgba(126,87,255,0.3)" strokeLinejoin="round"/>
   </svg>
 );
+
+// Message Square / Chat Icon
+export const IconMessageSquare = ({ size = 24, active = false, className = '' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+    <path
+      d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+      stroke={active ? "#00E5A0" : "currentColor"}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill={active ? "rgba(0,229,160,0.1)" : "none"}
+    />
+  </svg>
+);

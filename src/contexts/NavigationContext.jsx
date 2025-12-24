@@ -1,6 +1,12 @@
-import React, { createContext, useState, useCallback } from 'react';
+import React, { createContext, useState, useCallback, useContext } from 'react';
 
 export const NavigationContext = createContext(null);
+
+export const useNavigation = () => {
+  const context = useContext(NavigationContext);
+  if (!context) throw new Error('useNavigation must be used within NavigationProvider');
+  return context;
+};
 
 export const NavigationProvider = ({ children }) => {
   const [stack, setStack] = useState([{ screen: 'dashboard', params: {} }]);
