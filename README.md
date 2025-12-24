@@ -26,10 +26,16 @@ OakMega Social CRM 是專為社交平台打造的客戶關係管理系統，特�
 ### 樣式設計
 - **Tailwind CSS 3.4.1**: 實用優先的 CSS 框架
 - **Canopy Design System**: OakMega 自有設計系統
-  - 色彩: \`oak.forest\`, \`oak.moss\`, \`oak.gold\`, \`oak.paper\`, \`oak.bark\`
-  - 字體: Noto Sans CJK TC, Inter, Playfair Display
-  - 圓角: \`rounded-soft\` (12px)
-  - 陰影: \`shadow-glass\` 玻璃擬態效果
+  - 品牌色彩:
+    - `oak-soul` (#5D38BF): Purple 700 - 主要品牌色
+    - `oak-warmth` (#FFC044): Orange 400 - 強調色
+    - `oak-canvas` (#F9F9F7): Paper Canvas - 背景色
+    - `oak-text` (#2C2C2C): 主要文字色
+    - `oak-subtext` (#6B7280): 次要文字色
+  - 字體: Noto Sans TC, Ubuntu, Inter, Playfair Display
+  - 圓角: `rounded-soft` (12px), `rounded-card` (16px)
+  - 陰影: `shadow-soul`, `shadow-warmth`, `shadow-glass` 玻璃擬態效果
+  - 動畫: `animate-growth`, `animate-float` 品牌動畫效果
 
 ### 後端服務
 - **Supabase 2.57.4**: 開源的 Firebase 替代方案
@@ -50,14 +56,17 @@ OakMega Social CRM 是專為社交平台打造的客戶關係管理系統，特�
 
 \`\`\`
 social-crm/
+├── public/                   # 靜態資源
+│   └── vite.svg             # Vite Logo
 ├── src/
 │   ├── components/           # React 組件
+│   │   ├── automation/      # 自動化相關組件（LineMessageNode）
 │   │   ├── common/          # 通用組件（EmptyState, Skeleton）
 │   │   ├── games/           # 遊戲組件（轉盤、刮刮樂、老虎機）
 │   │   ├── icons/           # 圖標組件
 │   │   ├── layout/          # 布局組件（Navigation, Sidebar）
 │   │   ├── oma/             # OMA 相關組件
-│   │   ├── ui/              # UI 基礎組件
+│   │   ├── ui/              # UI 基礎組件（BrandButton, Loading, OptimisticChat）
 │   │   └── visualization/   # 數據可視化組件
 │   ├── contexts/            # React Context（Auth, Navigation）
 │   ├── hooks/               # 自定義 Hooks
@@ -84,6 +93,7 @@ social-crm/
 │   └── index.css            # 全局樣式
 ├── supabase/
 │   └── migrations/          # 資料庫遷移文件
+├── .env.example             # 環境變量範例
 ├── index.html               # HTML 入口文件
 ├── package.json             # NPM 依賴配置
 ├── vite.config.ts           # Vite 配置
@@ -115,12 +125,12 @@ npm install
 
 ### 3. 環境配置
 
-在專案根目錄創建 \`.env\` 文件：
+在專案根目錄創建 `.env` 文件（可參考 `.env.example`）：
 
-\`\`\`env
+```env
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-\`\`\`
+```
 
 **獲取 Supabase 憑證：**
 1. 前往 [Supabase Dashboard](https://app.supabase.com/)
@@ -208,7 +218,111 @@ function YourComponent() {
   push('playground'); // 遊樂場
   push('rewards');    // 優惠券
 }
-\`\`\`
+```
+
+### UI 組件使用
+
+#### BrandButton 品牌按鈕
+
+```javascript
+import { BrandButton } from './components/ui/BrandButton';
+
+function YourComponent() {
+  return (
+    <>
+      <BrandButton variant="primary">主要按鈕</BrandButton>
+      <BrandButton variant="action">行動按鈕</BrandButton>
+      <BrandButton variant="secondary">次要按鈕</BrandButton>
+      <BrandButton variant="ghost">幽靈按鈕</BrandButton>
+    </>
+  );
+}
+```
+
+#### Loading 載入動畫
+
+```javascript
+import { Loading, PageLoading } from './components/ui/Loading';
+
+function YourComponent() {
+  return (
+    <>
+      <Loading size="sm" color="soul" />
+      <Loading size="md" color="warmth" />
+      <PageLoading message="加載中..." />
+    </>
+  );
+}
+```
+
+#### OptimisticChat 即時聊天
+
+```javascript
+import { OptimisticChat } from './components/ui/OptimisticChat';
+
+function YourComponent() {
+  const handleSendMessage = async (message) => {
+    // 發送訊息到伺服器
+    const response = await fetch('/api/messages', {
+      method: 'POST',
+      body: JSON.stringify({ text: message })
+    });
+    return response.json();
+  };
+
+  return (
+    <OptimisticChat
+      initialMessages={[]}
+      onSendMessage={handleSendMessage}
+      userName="使用者名稱"
+    />
+  );
+}
+```
+
+#### Sidebar 側邊欄
+
+```javascript
+import { Sidebar } from './components/layout/Sidebar';
+
+function YourComponent() {
+  const navItems = [
+    { id: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: <DashboardIcon /> },
+    { id: 'inbox', label: 'Inbox', path: '/inbox', icon: <InboxIcon /> },
+    { id: 'oma', label: 'OMA', path: '/oma', icon: <OmaIcon /> },
+    { id: 'modules', label: 'Modules', path: '/modules', icon: <ModulesIcon /> },
+    { id: 'playground', label: 'Playground', path: '/playground', icon: <GameIcon /> },
+    { id: 'rewards', label: 'Rewards', path: '/rewards', icon: <GiftIcon /> },
+  ];
+
+  return (
+    <Sidebar
+      activePath="/dashboard"
+      navItems={navItems}
+      onNavigate={(path) => console.log('Navigate to:', path)}
+    />
+  );
+}
+```
+
+#### LineMessageNode React Flow 節點
+
+```javascript
+import { LineMessageNode } from './components/automation/LineMessageNode';
+
+function YourComponent() {
+  return (
+    <LineMessageNode
+      data={{
+        message: 'Hello! 👋',
+        sender: 'OakMega Bot',
+        timestamp: new Date().toISOString()
+      }}
+      selected={false}
+    />
+  );
+}
+```
 
 ## 功能說明
 
