@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { enablePreviewMode } from '../utils/preview';
 import { useAuth } from '../contexts/AuthContext';
 import { IconUser, IconLock, IconArrowRight, IconRefresh, IconWarning, IconOakMega } from '../components/icons';
 
@@ -140,17 +139,6 @@ export const ScreenLogin = () => {
               </>
             )}
           </button>
-
-<button
-  type="button"
-  onClick={() => {
-    enablePreviewMode();
-    window.location.href = '/?preview=1';
-  }}
-  className="w-full mt-3 py-3 bg-white/5 hover:bg-white/10 text-white/70 rounded-xl font-medium transition-colors"
->
-  開啟 UI 預覽（免登入）
-</button>
 
         </form>
 
