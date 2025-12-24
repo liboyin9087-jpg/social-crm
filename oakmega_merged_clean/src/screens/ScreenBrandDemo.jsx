@@ -18,7 +18,7 @@ export const ScreenBrandDemo = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-paper-canvas">
+    <div className="flex h-screen bg-oak-paper">
       {/* Sidebar Component Demo */}
       <Sidebar 
         activePath={activePath}
@@ -60,7 +60,7 @@ export const ScreenBrandDemo = () => {
                 </p>
               </div>
               <div className="space-y-2">
-                <div className="h-24 bg-paper-canvas border border-gray-200 rounded-lg"></div>
+                <div className="h-24 bg-oak-paper border border-gray-200 rounded-lg"></div>
                 <p className="text-sm font-sans">
                   <span className="font-semibold">Paper Canvas</span>
                   <br />

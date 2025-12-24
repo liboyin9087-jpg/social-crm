@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS line_users (
 -- Optional admin directory to support agent assignment
 CREATE TABLE IF NOT EXISTS admin_users (
   id serial PRIMARY KEY,
-  email text UNIQUE,
+  email text NOT NULL UNIQUE,
   display_name text,
   created_at timestamptz DEFAULT now()
 );
@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS user_tags (
   tag_id int NOT NULL REFERENCES tags(id) ON DELETE CASCADE,
   intensity_count int DEFAULT 1,
   expires_at timestamptz,
-  last_tagged_at timestamptz DEFAULT now()
+  last_tagged_at timestamptz DEFAULT now(),
+  UNIQUE (line_user_id, tag_id)
 );
 
 CREATE INDEX IF NOT EXISTS idx_user_tags_line_user ON user_tags(line_user_id);
@@ -85,7 +86,7 @@ $$;
 -- 4. Conversation records
 CREATE TABLE IF NOT EXISTS chat_messages (
   id bigserial PRIMARY KEY,
-  ticket_id int REFERENCES support_tickets(id) ON DELETE SET NULL,
+  ticket_id int REFERENCES support_tickets(id) ON DELETE CASCADE,
   sender_type text NOT NULL CHECK (sender_type IN ('user', 'agent', 'bot')),
   message_type text NOT NULL CHECK (message_type IN ('text', 'image', 'sticker', 'template')),
   content text,

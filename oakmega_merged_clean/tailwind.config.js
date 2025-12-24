@@ -6,7 +6,6 @@ export default {
       colors: {
         'oakmega-purple-700': '#5D38BF',
         'oakmega-orange-400': '#FFC044',
-        'paper-canvas': '#F9F9F7',
         oak: {
           forest: '#2F3A25',
           moss: '#6A6C51',
