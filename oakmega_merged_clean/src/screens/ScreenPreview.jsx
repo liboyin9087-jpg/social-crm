@@ -63,6 +63,7 @@ export const ScreenPreview = () => {
       </div>
 
       <div className="px-6 space-y-3">
+        <Card title="Brand Demo" desc="OakMega Canopy 品牌識別系統展示" onClick={() => push('brandDemo')} />
         <Card title="Dashboard" desc="總覽 KPI + Flow 視覺化 + 快捷入口" onClick={() => push('dashboard')} />
         <Card title="Module Hub" desc="模組入口與導流" onClick={() => push('moduleHub')} />
         <Card title="Modules" desc="模組清單 + 篩選 + 開關" onClick={() => push('modules')} />
