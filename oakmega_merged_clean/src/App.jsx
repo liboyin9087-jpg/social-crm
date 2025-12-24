@@ -13,6 +13,7 @@ import ScreenModules from './screens/ScreenModules';
 import { ScreenOMA } from './screens/ScreenOMA';
 import { ScreenPlayground } from './screens/ScreenPlayground';
 import { ScreenRewards } from './screens/ScreenRewards';
+import { ScreenBrandDemo } from './screens/ScreenBrandDemo';
 
 const AppContent = () => {
   const { user } = useAuth();
@@ -38,6 +39,8 @@ const AppContent = () => {
         return <ScreenPlayground />;
       case 'rewards':
         return <ScreenRewards />;
+      case 'brandDemo':
+        return <ScreenBrandDemo />;
       default:
         return <ScreenDashboard />;
     }
