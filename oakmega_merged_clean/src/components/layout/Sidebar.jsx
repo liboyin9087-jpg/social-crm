@@ -65,7 +65,7 @@ export const Sidebar = ({
                   )}
                   
                   {/* Label */}
-                  <span className={`font-body font-medium ${isActive ? 'font-semibold' : ''}`}>
+                  <span className={`font-sans font-medium ${isActive ? 'font-semibold' : ''}`}>
                     {item.label}
                   </span>
                 </button>
@@ -77,7 +77,7 @@ export const Sidebar = ({
 
       {/* Optional Footer Section */}
       <div className="px-6 py-4 border-t border-gray-200">
-        <p className="text-xs text-gray-500 font-body">© 2024 OakMega</p>
+        <p className="text-xs text-gray-500 font-sans">© 2024 OakMega</p>
       </div>
     </aside>
   );

@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply bg-paper-canvas font-body;
+    @apply bg-paper-canvas font-sans;
   }
 }

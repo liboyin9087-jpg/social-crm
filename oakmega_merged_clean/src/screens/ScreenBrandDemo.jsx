@@ -34,7 +34,7 @@ export const ScreenBrandDemo = () => {
             <h1 className="text-4xl font-brand font-bold text-oakmega-purple-700 mb-2">
               OakMega Canopy Brand Identity
             </h1>
-            <p className="text-lg text-gray-600 font-body">
+            <p className="text-lg text-gray-600 font-sans">
               A showcase of the brand components and design system
             </p>
           </div>
@@ -45,7 +45,7 @@ export const ScreenBrandDemo = () => {
             <div className="grid grid-cols-3 gap-4">
               <div className="space-y-2">
                 <div className="h-24 bg-oakmega-purple-700 rounded-lg shadow-growth"></div>
-                <p className="text-sm font-body">
+                <p className="text-sm font-sans">
                   <span className="font-semibold">OakMega Purple</span>
                   <br />
                   <span className="text-gray-600">#5D38BF</span>
@@ -53,7 +53,7 @@ export const ScreenBrandDemo = () => {
               </div>
               <div className="space-y-2">
                 <div className="h-24 bg-oakmega-orange-400 rounded-lg shadow-sm"></div>
-                <p className="text-sm font-body">
+                <p className="text-sm font-sans">
                   <span className="font-semibold">OakMega Orange</span>
                   <br />
                   <span className="text-gray-600">#FFC044</span>
@@ -61,7 +61,7 @@ export const ScreenBrandDemo = () => {
               </div>
               <div className="space-y-2">
                 <div className="h-24 bg-paper-canvas border border-gray-200 rounded-lg"></div>
-                <p className="text-sm font-body">
+                <p className="text-sm font-sans">
                   <span className="font-semibold">Paper Canvas</span>
                   <br />
                   <span className="text-gray-600">#F9F9F7</span>
@@ -73,7 +73,7 @@ export const ScreenBrandDemo = () => {
           {/* BrandButton Section */}
           <section className="bg-white rounded-xl shadow-sm p-6 space-y-4">
             <h2 className="text-2xl font-brand font-semibold text-gray-900">Brand Buttons</h2>
-            <p className="text-sm text-gray-600 font-body mb-4">
+            <p className="text-sm text-gray-600 font-sans mb-4">
               Interactive buttons with hover lift effect (translateY -2px) and brand styling
             </p>
             
@@ -111,7 +111,7 @@ export const ScreenBrandDemo = () => {
             <div className="space-y-4">
               <div>
                 <p className="text-sm text-gray-500 mb-2">Body Text (Noto Sans CJK TC)</p>
-                <p className="font-body text-base">
+                <p className="font-sans text-base">
                   這是使用 Noto Sans CJK TC 字體的內文範例。The quick brown fox jumps over the lazy dog.
                 </p>
               </div>
@@ -136,7 +136,7 @@ export const ScreenBrandDemo = () => {
             <div className="flex gap-6">
               <div className="p-6 bg-oakmega-purple-700 text-white rounded-lg shadow-growth">
                 <p className="font-brand">Growth Shadow</p>
-                <p className="text-sm opacity-80 font-body">shadow-growth</p>
+                <p className="text-sm opacity-80 font-sans">shadow-growth</p>
               </div>
             </div>
           </section>
@@ -144,7 +144,7 @@ export const ScreenBrandDemo = () => {
           {/* Implementation Notes */}
           <section className="bg-white rounded-xl shadow-sm p-6 space-y-4">
             <h2 className="text-2xl font-brand font-semibold text-gray-900">Implementation Notes</h2>
-            <ul className="list-disc list-inside space-y-2 text-sm text-gray-600 font-body">
+            <ul className="list-disc list-inside space-y-2 text-sm text-gray-600 font-sans">
               <li>Sidebar component features sticky positioning and active state indicators</li>
               <li>Active navigation items show an orange (#FFC044) vertical bar</li>
               <li>BrandButton components include hover lift effect with -2px translateY</li>

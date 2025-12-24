@@ -10,7 +10,6 @@ export default {
       },
       fontFamily: {
         sans: ['"Noto Sans CJK TC"', 'system-ui', 'sans-serif'],
-        body: ['"Noto Sans CJK TC"', 'system-ui', 'sans-serif'],
         brand: ['Ubuntu', 'Inter', 'system-ui', 'sans-serif'],
         numbers: ['Ubuntu', 'Inter', 'system-ui', 'sans-serif'],
       },
