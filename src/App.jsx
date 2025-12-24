@@ -5,22 +5,19 @@ import { useAuth } from './contexts/AuthContext';
 import { useNavigation } from './hooks/useNavigation';
 import { Navigation } from './components/layout/Navigation';
 import { ScreenLogin } from './screens/ScreenLogin';
-import { ScreenPreview } from './screens/ScreenPreview';
-import { isPreviewMode } from './utils/preview';
 import { ScreenDashboard } from './screens/ScreenDashboard';
 import { ScreenModuleHub } from './screens/ScreenModuleHub';
 import ScreenModules from './screens/ScreenModules';
 import { ScreenOMA } from './screens/ScreenOMA';
 import { ScreenPlayground } from './screens/ScreenPlayground';
 import { ScreenRewards } from './screens/ScreenRewards';
-import { ScreenBrandDemo } from './screens/ScreenBrandDemo';
 
 const AppContent = () => {
   const { user } = useAuth();
   const { currentScreen, push } = useNavigation();
 
   if (!user) {
-    return isPreviewMode() ? <ScreenPreview /> : <ScreenLogin />;
+    return <ScreenLogin />;
   }
 
   const activeScreen = currentScreen?.screen || 'dashboard';
@@ -39,8 +36,6 @@ const AppContent = () => {
         return <ScreenPlayground />;
       case 'rewards':
         return <ScreenRewards />;
-      case 'brandDemo':
-        return <ScreenBrandDemo />;
       default:
         return <ScreenDashboard />;
     }

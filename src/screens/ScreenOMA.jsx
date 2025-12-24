@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { MOCK_DATA } from '../utils/mockData';
 import { formatRelativeTime } from '../utils/helpers';
 import { OMA_ACTION_LABELS } from '../utils/constants';
 import { EmptyStateNoOMAData } from '../components/common/EmptyState';
@@ -339,7 +338,11 @@ export const ScreenOMA = () => {
 
   // Extend mock data with more event types
   const extendedMockEvents = useMemo(() => {
-    const baseEvents = [...MOCK_DATA.omaEvents];
+    const baseEvents = [
+      { id: 'oma_1', userId: 'usr_001', actionType: 'qr_scan', locationName: '台北信義店', coordinates: { lat: 25.033, lng: 121.564 }, timestamp: new Date(Date.now() - 10000) },
+      { id: 'oma_2', userId: 'usr_002', actionType: 'coupon_redeem', locationName: '線上商店', coordinates: { lat: 0, lng: 0 }, timestamp: new Date(Date.now() - 32000) },
+      { id: 'oma_3', userId: 'usr_003', actionType: 'signup', locationName: '台中公益店', coordinates: { lat: 24.147, lng: 120.673 }, timestamp: new Date(Date.now() - 60000) },
+    ];
     const additionalEvents = [
       { id: 'oma_4', userId: 'usr_004', actionType: 'page_view', locationName: '產品頁：保濕精華液', coordinates: { lat: 0, lng: 0 }, timestamp: new Date(Date.now() - 120000) },
       { id: 'oma_5', userId: 'usr_005', actionType: 'add_to_cart', locationName: '商品：玻尿酸面膜', coordinates: { lat: 0, lng: 0 }, timestamp: new Date(Date.now() - 180000) },
